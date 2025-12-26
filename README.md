@@ -7,22 +7,22 @@ A kanji tracker with spaced repetition system, built with Django REST Framework 
 
 ```
 kanji-tracker/
-├── backend/                # Django backend
-│   ├── learning/           # Learning app
-│   │   ├── models.py       # Database models
-│   │   ├── views/          # API views
-│   │   ├── serializers.py  # DRF serializers
-│   │   └── services/       # Business logic
-│   └── kanji_tracker/      # Django project settings
-├── frontend/               # React frontend
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── services/       # API service layer
-│   │   └── App.jsx         # Main app component
-│   └── package.json
-└── kanji_data/             # CSV data files
-    ├── kanji_class_*.csv   # Kanji data by class
-    └── IMPORT_GUIDE.md     # Import instructions
+├── backend/                    # Django backend
+│   ├── learning/               # Learning app
+│   │   ├── models.py           # Database models
+│   │   ├── views/              # API views
+│   │   ├── serializers.py      # DRF serializers
+│   │   └── services/           # Business logic
+│   ├── kanji_data/             # CSV data files
+|   |   ├── kanji_class_*.csv   # Kanji data by class
+|   |   └── IMPORT_GUIDE.md     # Import instructions
+│   └── kanji_tracker/          # Django project settings
+└── frontend/                   # React frontend
+    ├── src/
+    │   ├── components/         # React components
+    │   ├── services/           # API service layer
+    │   └── App.jsx             # Main app component
+    └── package.json
 ```
 
 ## Setup
@@ -100,12 +100,12 @@ Quick import command:
 ```bash
 cd backend
 source ../venv/bin/activate
-python manage.py import_kanji_csv --all
+python manage.py kanji_data/import_kanji_csv --all
 ```
-
+** will update with more kanji soon!
 
 ## Tech stack
 
 - **Backend**: Django
 - **Frontend**: React
-- **Database**: SQLite
+- **Database**: SQLite (dev)
