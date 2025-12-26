@@ -94,7 +94,7 @@ The API endpoints are defined in `kanji_tracker/learning/urls.py`. Expected endp
 
 ### Importing Kanji Data
 
-To import kanji from CSV files, see the [IMPORT_GUIDE.md](kanji_data/IMPORT_GUIDE.md) in the `kanji_data/` folder.
+To import kanji from CSV files, see the [IMPORT_GUIDE.md](backend/kanji_data/IMPORT_GUIDE.md) in the `kanji_data/` folder.
 
 Quick import command:
 ```bash
