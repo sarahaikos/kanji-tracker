@@ -7,19 +7,22 @@ A kanji tracker with spaced repetition system, built with Django REST Framework 
 
 ```
 kanji-tracker/
-├── backend/          # Django backend
+├── backend/                # Django backend
 │   ├── learning/           # Learning app
 │   │   ├── models.py       # Database models
 │   │   ├── views/          # API views
 │   │   ├── serializers.py  # DRF serializers
 │   │   └── services/       # Business logic
 │   └── kanji_tracker/      # Django project settings
-└── frontend/               # React frontend
-    ├── src/
-    │   ├── components/     # React components
-    │   ├── services/       # API service layer
-    │   └── App.jsx         # Main app component
-    └── package.json
+├── frontend/               # React frontend
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   ├── services/       # API service layer
+│   │   └── App.jsx         # Main app component
+│   └── package.json
+└── kanji_data/             # CSV data files
+    ├── kanji_class_*.csv   # Kanji data by class
+    └── IMPORT_GUIDE.md     # Import instructions
 ```
 
 ## Setup
@@ -83,11 +86,22 @@ The frontend will be available at `http://localhost:3000`
 
 The API endpoints are defined in `kanji_tracker/learning/urls.py`. Expected endpoints:
 
-- `GET /api/review/` - Get kanji for review
+- `GET /api/review/` - Get kanji for review (optionally filter by `?mastery_level=X`)
 - `POST /api/review/` - Submit review result
 - `GET /api/stats/` - Get dashboard statistics
-- `GET /api/kanji/` - Get all kanji
+- `GET /api/kanji/` - Get all kanji (optionally filter by `?class=X`)
 - `POST /api/kanji/` - Add new kanji
+
+### Importing Kanji Data
+
+To import kanji from CSV files, see the [IMPORT_GUIDE.md](kanji_data/IMPORT_GUIDE.md) in the `kanji_data/` folder.
+
+Quick import command:
+```bash
+cd backend
+source ../venv/bin/activate
+python manage.py import_kanji_csv --all
+```
 
 
 ## Tech stack

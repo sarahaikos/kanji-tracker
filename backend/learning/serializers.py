@@ -41,7 +41,7 @@ class KanjiSerializer(serializers.ModelSerializer):
     class Meta:
         model = Kanji
         fields = [
-            'id', 'character', 'meaning', 'difficulty',
+            'id', 'character', 'meaning', 'class_level', 'difficulty',
             'readings', 'examples', 'created_at',
             'onyomi', 'kunyomi', 'example_data'
         ]

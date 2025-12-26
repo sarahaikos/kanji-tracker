@@ -1,22 +1,41 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { kanjiAPI } from '../services/api'
 import './Dashboard.css'
 
 function Dashboard() {
+  const location = useLocation()
   const [stats, setStats] = useState({
     total_kanji: 0,
     mastered: 0,
     learning: 0,
     due_for_review: 0,
     streak: 0,
+    mastery_progress: 0,
+    mastery_levels: [],
   })
+  const [expandedLevel, setExpandedLevel] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
     loadStats()
+    
+    // Refresh stats when component comes into focus (e.g., after returning from review)
+    const handleFocus = () => {
+      loadStats()
+    }
+    
+    window.addEventListener('focus', handleFocus)
+    return () => window.removeEventListener('focus', handleFocus)
   }, [])
+
+  // Refresh stats when navigating to Dashboard (e.g., returning from review)
+  useEffect(() => {
+    if (location.pathname === '/') {
+      loadStats()
+    }
+  }, [location.pathname])
 
   const loadStats = async () => {
     try {
@@ -47,9 +66,12 @@ function Dashboard() {
     )
   }
 
-  const masteryPercentage = stats.total_kanji > 0 
-    ? Math.round((stats.mastered / stats.total_kanji) * 100) 
-    : 0
+  // Use mastery_progress from backend if available, otherwise calculate from mastered count
+  const masteryPercentage = stats.mastery_progress > 0 
+    ? Math.round(stats.mastery_progress)
+    : (stats.total_kanji > 0 
+      ? Math.round((stats.mastered / stats.total_kanji) * 100) 
+      : 0)
 
   return (
     <div className="dashboard">
@@ -110,6 +132,58 @@ function Dashboard() {
           </div>
         </div>
       </div>
+
+      {stats.mastery_levels && stats.mastery_levels.length > 0 && (
+        <div className="mastery-levels-section">
+          <h2 className="section-title">Kanji by Mastery Level</h2>
+          <div className="mastery-levels-grid">
+            {stats.mastery_levels.map((levelData) => (
+              <div 
+                key={levelData.level} 
+                className="mastery-level-card"
+                data-level={levelData.level}
+              >
+                <div 
+                  className="mastery-level-header"
+                  onClick={() => setExpandedLevel(expandedLevel === levelData.level ? null : levelData.level)}
+                >
+                  <div className="level-info">
+                    <span className="level-label">
+                      {levelData.level >= 5 ? 'Mastered' : `Level ${levelData.level}`}
+                    </span>
+                    <span className="level-count">{levelData.count} kanji</span>
+                  </div>
+                  <div className="level-actions">
+                    <Link 
+                      to={`/review?level=${levelData.level}`}
+                      className="review-level-button"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Review
+                    </Link>
+                    <span className="expand-icon">
+                      {expandedLevel === levelData.level ? '▼' : '▶'}
+                    </span>
+                  </div>
+                </div>
+                {expandedLevel === levelData.level && (
+                  <div className="kanji-list">
+                    {levelData.kanji.map((kanji) => (
+                      <div key={kanji.id} className="kanji-item">
+                        <span className="kanji-character">{kanji.character}</span>
+                        <span className="kanji-meaning">{kanji.meaning}</span>
+                        <span className="kanji-stats">
+                          {kanji.correct_count}/{kanji.review_count} correct
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="action-section">
         <div className="action-buttons">

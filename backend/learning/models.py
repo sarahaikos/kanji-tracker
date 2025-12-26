@@ -6,6 +6,11 @@ class Kanji(models.Model):
     """Model to store kanji characters and their information"""
     character = models.CharField(max_length=1, unique=True, help_text="The kanji character")
     meaning = models.TextField(help_text="English meaning(s) of the kanji")
+    class_level = models.IntegerField(
+        null=True, 
+        blank=True,
+        help_text="Class/Grade level (1-6) for educational kanji"
+    )
     difficulty = models.CharField(
         max_length=20,
         choices=[
@@ -19,7 +24,7 @@ class Kanji(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['class_level', 'character']
     
     def __str__(self):
         return f"{self.character} - {self.meaning}"

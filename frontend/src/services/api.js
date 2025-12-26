@@ -11,9 +11,12 @@ const api = axios.create({
 
 // Kanji API
 export const kanjiAPI = {
-  // Get kanji for review
-  getReviewKanji: async () => {
-    const response = await api.get('/review/')
+  // Get kanji for review, optionally filtered by mastery level
+  getReviewKanji: async (masteryLevel = null) => {
+    const url = masteryLevel !== null 
+      ? `/review/?mastery_level=${masteryLevel}`
+      : '/review/'
+    const response = await api.get(url)
     return response.data
   },
 
@@ -41,6 +44,12 @@ export const kanjiAPI = {
   // Add new kanji
   addKanji: async (kanjiData) => {
     const response = await api.post('/kanji/', kanjiData)
+    return response.data
+  },
+
+  // Get kanji by class (grade level)
+  getKanjiByClass: async (classNum) => {
+    const response = await api.get(`/kanji/?class=${classNum}`)
     return response.data
   },
 }

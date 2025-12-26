@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import ReviewSession from './components/ReviewSession'
 import Dashboard from './components/Dashboard'
 import AddKanji from './components/AddKanji'
+import Learn from './components/Learn'
 import './App.css'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
             </Link>
             <div className="nav-links">
               <Link to="/">Dashboard</Link>
+              <Link to="/learn">Learn</Link>
               <Link to="/review">Review</Link>
               <Link to="/add">Add Kanji</Link>
             </div>
@@ -24,6 +26,7 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/learn" element={<Learn />} />
             <Route path="/review" element={<ReviewSession />} />
             <Route path="/add" element={<AddKanji />} />
           </Routes>

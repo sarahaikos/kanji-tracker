@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { kanjiAPI } from '../services/api'
 import './ReviewSession.css'
 
 function ReviewSession() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const masteryLevel = searchParams.get('level')
   const [kanji, setKanji] = useState(null)
   const [showAnswer, setShowAnswer] = useState(false)
   const [sessionStats, setSessionStats] = useState({
@@ -17,14 +19,15 @@ function ReviewSession() {
 
   useEffect(() => {
     loadNextKanji()
-  }, [])
+  }, [masteryLevel])
 
   const loadNextKanji = async () => {
     try {
       setLoading(true)
       setShowAnswer(false)
       
-      const data = await kanjiAPI.getReviewKanji()
+      const level = masteryLevel ? parseInt(masteryLevel) : null
+      const data = await kanjiAPI.getReviewKanji(level)
       setKanji(data)
     } catch (err) {
       console.error('Failed to load kanji:', err)
@@ -76,7 +79,11 @@ function ReviewSession() {
     return (
       <div className="review-session">
         <div className="no-kanji">
-          <h2>No kanji available for review</h2>
+          <h2>
+            {masteryLevel 
+              ? `No kanji available for review at mastery level ${masteryLevel}`
+              : 'No kanji available for review'}
+          </h2>
           <button onClick={() => navigate('/')} className="back-button">
             Return to Dashboard
           </button>
@@ -91,10 +98,17 @@ function ReviewSession() {
         <button onClick={() => navigate('/')} className="back-button">
           ← Back
         </button>
-        <div className="session-stats">
-          <span>Total: {sessionStats.total}</span>
-          <span className="correct">✓ {sessionStats.correct}</span>
-          <span className="incorrect">✗ {sessionStats.incorrect}</span>
+        <div className="review-info">
+          {masteryLevel && (
+            <div className="mastery-level-badge">
+              Reviewing Level {parseInt(masteryLevel) >= 5 ? 'Mastered' : masteryLevel}
+            </div>
+          )}
+          <div className="session-stats">
+            <span>Total: {sessionStats.total}</span>
+            <span className="correct">✓ {sessionStats.correct}</span>
+            <span className="incorrect">✗ {sessionStats.incorrect}</span>
+          </div>
         </div>
       </div>
 

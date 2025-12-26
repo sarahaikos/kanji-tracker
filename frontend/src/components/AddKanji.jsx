@@ -106,7 +106,24 @@ function AddKanji() {
         navigate('/')
       }, 1500)
     } catch (err) {
-      setError(err.response?.data?.errors || err.message || 'Failed to add kanji')
+      // Handle both 'error' (single message) and 'errors' (validation errors) formats
+      const errorData = err.response?.data
+      if (errorData?.error) {
+        setError(errorData.error)
+      } else if (errorData?.errors) {
+        // Handle validation errors - format them nicely
+        const errorMessages = Object.entries(errorData.errors)
+          .map(([field, messages]) => {
+            if (Array.isArray(messages)) {
+              return `${field}: ${messages.join(', ')}`
+            }
+            return `${field}: ${messages}`
+          })
+          .join('\n')
+        setError(errorMessages)
+      } else {
+        setError(err.message || 'Failed to add kanji')
+      }
     } finally {
       setLoading(false)
     }
