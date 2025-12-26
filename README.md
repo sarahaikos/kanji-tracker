@@ -1,20 +1,13 @@
 # Kanji Tracker
 
-A modern kanji learning application with spaced repetition system, built with Django REST Framework backend and React frontend.
+A kanji tracker with spaced repetition system, built with Django REST Framework backend and React frontend.
 
-## Features
-
-- 📚 Kanji review sessions with flashcard interface
-- 📊 Dashboard with learning statistics and progress tracking
-- 🔥 Streak tracking to maintain daily practice
-- 🎯 Spaced repetition algorithm for optimal learning
-- 💫 Beautiful, modern UI with dark theme
 
 ## Project Structure
 
 ```
 kanji-tracker/
-├── kanji_tracker/          # Django backend
+├── backend/          # Django backend
 │   ├── learning/           # Learning app
 │   │   ├── models.py       # Database models
 │   │   ├── views/          # API views
@@ -35,13 +28,15 @@ kanji-tracker/
 
 1. Navigate to the Django project directory:
 ```bash
-cd kanji_tracker
+cd backend
 ```
 
 2. Activate the virtual environment:
 ```bash
 source ../venv/bin/activate  # On macOS/Linux
+
 # or
+
 ..\venv\Scripts\activate  # On Windows
 ```
 
@@ -94,20 +89,9 @@ The API endpoints are defined in `kanji_tracker/learning/urls.py`. Expected endp
 - `GET /api/kanji/` - Get all kanji
 - `POST /api/kanji/` - Add new kanji
 
-### Frontend Development
 
-The frontend uses:
-- **React 18** for UI components
-- **React Router** for navigation
-- **Vite** for fast development and building
-- **Axios** for API communication
+## Tech stack
 
-## Technologies
-
-- **Backend**: Django 5.2, Django REST Framework
-- **Frontend**: React 18, Vite, React Router
-- **Database**: SQLite (development)
-
-## License
-
-MIT
+- **Backend**: Django
+- **Frontend**: React
+- **Database**: SQLite
