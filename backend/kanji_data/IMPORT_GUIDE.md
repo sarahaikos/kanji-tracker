@@ -14,15 +14,52 @@ All CSV files are located in the `kanji_data/` folder. Each class has its own CS
 
 ### CSV Columns
 
-Each CSV file should have the following columns:
-- `character` - The kanji character (single character)
-- `meaning` - English meaning(s) of the kanji
-- `onyomi` - Onyomi readings (音読み), separated by ・ if multiple
-- `kunyomi` - Kunyomi readings (訓読み), separated by ・ if multiple
-- `example_japanese` - Example word/phrase in Japanese
-- `example_reading` - Reading of the example (hiragana)
-- `example_meaning` - English meaning of the example
+### Required Columns
 
+- `character` - Single kanji character (required)
+- `meaning` - Meaning of the kanji (required)
+
+### Optional Columns
+
+- `onyomi` - Onyomi (音読み) readings, separated by `・` (middle dot)
+- `kunyomi` - Kunyomi (訓読み) readings, separated by `・` (middle dot)
+- `example` - Multiple examples in new format (see below)
+- `example_japanese` - Single example Japanese text (old format, for backward compatibility)
+- `example_reading` - Single example reading (old format, for backward compatibility)
+- `example_meaning` - Single example meaning (old format, for backward compatibility)
+
+## Multiple Values Format
+
+### Onyomi and Kunyomi
+
+Multiple readings are separated by `・` (middle dot):
+
+```
+onyomi: せい・しょう
+kunyomi: いきる・うまれる
+```
+
+### Examples (New Format)
+
+Multiple examples are separated by `||` (double pipe). Each example uses `::` (double colon) to separate fields:
+
+**Format:** `japanese::reading::meaning||japanese::reading::meaning`
+
+**Example:**
+```
+example: 日本語::にほんご::Japanese language||日本語を話す::にほんごをはなす::speak Japanese
+```
+
+**Note:** Reading is optional. You can use:
+- `japanese::meaning` (no reading)
+- `japanese::reading::meaning` (with reading)
+
+### Examples (Old Format - Still Supported)
+
+For backward compatibility, you can still use separate columns:
+- `example_japanese` - Japanese text
+- `example_reading` - Reading (optional)
+- `example_meaning` - Meaning
 
 ## Import Commands
 
@@ -33,7 +70,7 @@ To import all CSV files at once:
 ```bash
 cd backend
 source ../venv/bin/activate
-python manage.py kanji_data/import_kanji_csv --all
+python manage.py import_kanji_csv --all
 ```
 
 ### Import Specific Class
@@ -41,6 +78,6 @@ python manage.py kanji_data/import_kanji_csv --all
 To import kanji for a specific class (e.g., class 1):
 
 ```bash
-python manage.py kanji_data/import_kanji_csv --class 1
+python manage.py import_kanji_csv --class 1
 ```
 

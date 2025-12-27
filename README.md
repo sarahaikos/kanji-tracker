@@ -94,9 +94,14 @@ The API endpoints are defined in `kanji_tracker/learning/urls.py`. Expected endp
 
 ### Importing Kanji Data
 
-To import kanji from CSV files, see the [IMPORT_GUIDE.md](kanji_data/IMPORT_GUIDE.md) in the `kanji_data/` folder.
+Kanji data is automatically imported from CSV files when the server starts (if the database is empty).
 
-Quick import command:
+**CSV Format:**
+- Multiple onyomi/kunyomi readings: separated by `・` (middle dot)
+- Multiple examples: separated by `||`, each example as `japanese::reading::meaning`
+- See [CSV_TEMPLATE.md](backend/kanji_data/CSV_TEMPLATE.md) for detailed format guide
+
+**Manual import command:**
 ```bash
 cd backend
 source ../venv/bin/activate

@@ -11,11 +11,16 @@ const api = axios.create({
 
 // Kanji API
 export const kanjiAPI = {
-  // Get kanji for review, optionally filtered by mastery level
-  getReviewKanji: async (masteryLevel = null) => {
-    const url = masteryLevel !== null 
-      ? `/review/?mastery_level=${masteryLevel}`
-      : '/review/'
+  // Get kanji for review, optionally filtered by mastery level or class
+  getReviewKanji: async (masteryLevel = null, classLevel = null) => {
+    const params = new URLSearchParams()
+    if (masteryLevel !== null) {
+      params.append('mastery_level', masteryLevel)
+    }
+    if (classLevel !== null) {
+      params.append('class', classLevel)
+    }
+    const url = params.toString() ? `/review/?${params.toString()}` : '/review/'
     const response = await api.get(url)
     return response.data
   },

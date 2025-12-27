@@ -69,18 +69,51 @@ def import_kanji_from_csv(filepath, class_num, silent=False):
                             reading_type='kunyomi'
                         )
             
-            # Add example
+            # Add examples - support multiple examples
+            # Format: Multiple examples separated by ||, each example as japanese::reading::meaning
+            # Or use the old format with separate columns (for backward compatibility)
+            examples_data = []
+            
+            # Check for new format: example column with || separator
+            example_field = row.get('example', '').strip()
+            if example_field:
+                # New format: example1||example2||example3 where each is japanese::reading::meaning
+                for example_str in example_field.split('||'):
+                    example_str = example_str.strip()
+                    if not example_str:
+                        continue
+                    parts = example_str.split('::')
+                    if len(parts) >= 2:
+                        japanese = parts[0].strip()
+                        reading = parts[1].strip() if len(parts) > 1 else ''
+                        meaning = parts[2].strip() if len(parts) > 2 else ''
+                        if japanese and meaning:
+                            examples_data.append({
+                                'japanese': japanese,
+                                'reading': reading,
+                                'meaning': meaning
+                            })
+            
+            # Also support old format with separate columns (for backward compatibility)
             example_japanese = row.get('example_japanese', '').strip()
             example_reading = row.get('example_reading', '').strip()
             example_meaning = row.get('example_meaning', '').strip()
             
             if example_japanese and example_meaning:
+                examples_data.append({
+                    'japanese': example_japanese,
+                    'reading': example_reading,
+                    'meaning': example_meaning
+                })
+            
+            # Create all examples
+            for example_data in examples_data:
                 KanjiExample.objects.get_or_create(
                     kanji=kanji,
-                    japanese=example_japanese,
+                    japanese=example_data['japanese'],
                     defaults={
-                        'reading': example_reading,
-                        'meaning': example_meaning
+                        'reading': example_data['reading'],
+                        'meaning': example_data['meaning']
                     }
                 )
             

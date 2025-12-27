@@ -7,6 +7,7 @@ function ReviewSession() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const masteryLevel = searchParams.get('level')
+  const classLevel = searchParams.get('class')
   const [kanji, setKanji] = useState(null)
   const [showAnswer, setShowAnswer] = useState(false)
   const [sessionStats, setSessionStats] = useState({
@@ -19,7 +20,7 @@ function ReviewSession() {
 
   useEffect(() => {
     loadNextKanji()
-  }, [masteryLevel])
+  }, [masteryLevel, classLevel])
 
   const loadNextKanji = async () => {
     try {
@@ -27,7 +28,8 @@ function ReviewSession() {
       setShowAnswer(false)
       
       const level = masteryLevel ? parseInt(masteryLevel) : null
-      const data = await kanjiAPI.getReviewKanji(level)
+      const classNum = classLevel ? parseInt(classLevel) : null
+      const data = await kanjiAPI.getReviewKanji(level, classNum)
       setKanji(data)
     } catch (err) {
       console.error('Failed to load kanji:', err)
@@ -82,6 +84,8 @@ function ReviewSession() {
           <h2>
             {masteryLevel 
               ? `No kanji available for review at mastery level ${masteryLevel}`
+              : classLevel
+              ? `No kanji available for review in class ${classLevel}`
               : 'No kanji available for review'}
           </h2>
           <button onClick={() => navigate('/')} className="back-button">
@@ -104,10 +108,15 @@ function ReviewSession() {
               Reviewing Level {parseInt(masteryLevel) >= 5 ? 'Mastered' : masteryLevel}
             </div>
           )}
-          <div className="session-stats">
-            <span>Total: {sessionStats.total}</span>
-            <span className="correct">✓ {sessionStats.correct}</span>
-            <span className="incorrect">✗ {sessionStats.incorrect}</span>
+          {classLevel && (
+            <div className="class-level-badge">
+              Class {classLevel}
+            </div>
+          )}
+        <div className="session-stats">
+          <span>Total: {sessionStats.total}</span>
+          <span className="correct">✓ {sessionStats.correct}</span>
+          <span className="incorrect">✗ {sessionStats.incorrect}</span>
           </div>
         </div>
       </div>

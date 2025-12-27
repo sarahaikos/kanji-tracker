@@ -1,56 +1,9 @@
-character,meaning,onyomi,kunyomi,example_japanese,example_reading,example_meaning
-住,live/reside,じゅう,すむ,住む,すむ,to live
-所,place,しょ,ところ,場所,ばしょ,place
-場,place/ground,じょう,ば,場所,ばしょ,place
-道,road/way,どう・とう,みち,道,みち,road
-駅,station,えき,えき,駅,えき,station
-車,car/vehicle,しゃ,くるま,車,くるま,car
-電,electricity,でん,でん,電車,でんしゃ,electric train
-気,spirit/mood,き・け,き,元気,げんき,healthy/energetic
-天,heaven/sky,てん,あめ・あま,天気,てんき,weather
-病,sick/illness,びょう・へい,やむ,病気,びょうき,illness
-院,institution,いん,いん,病院,びょういん,hospital
-店,shop/store,てん,みせ,店,みせ,shop
-買,buy,ばい,かう,買う,かう,to buy
-売,sell,ばい,うる,売る,うる,to sell
-新,new,しん,あたらしい・あらた,新しい,あたらしい,new
-古,old,こ,ふるい,古い,ふるい,old
-高,high/expensive,こう,たかい,高い,たかい,high/expensive
-低,low,てい,ひくい,低い,ひくい,low
-長,long/leader,ちょう,ながい,長い,ながい,long
-短,short,たん,みじかい,短い,みじかい,short
-広,wide,こう,ひろい,広い,ひろい,wide
-狭,narrow,きょう・こう,せまい,狭い,せまい,narrow
-多,many/much,た,おおい,多い,おおい,many
-少,few/little,しょう,すくない,少ない,すくない,few
-早,early/fast,そう・さっ,はやい,早い,はやい,early
-遅,late/slow,ち,おそい,遅い,おそい,late
-近,near/close,きん・こん,ちかい,近い,ちかい,near
-遠,far/distant,えん・おん,とおい,遠い,とおい,far
-強,strong,きょう・ごう,つよい,強い,つよい,strong
-弱,weak,じゃく,よわい,弱い,よわい,weak
-重,heavy/serious,じゅう・ちょう,おもい,重い,おもい,heavy
-軽,light,けい,かるい,軽い,かるい,light
-明,bright/clear,めい・みょう,あかるい・あきらか,明るい,あかるい,bright
-暗,dark,あん,くらい,暗い,くらい,dark
-暑,hot (weather),しょ,あつい,暑い,あつい,hot
-寒,cold,かん,さむい,寒い,さむい,cold
-暖,warm,だん,あたたかい,暖かい,あたたかい,warm
-涼,cool/refreshing,りょう,すずしい,涼しい,すずしい,cool
-好,like/good,こう,すき・このむ,好き,すき,like
-悪,bad/evil,あく・お,わるい,悪い,わるい,bad
-楽,comfort/easy,がく・らく,たのしい・らく,楽しい,たのしい,fun
-難,difficult,なん,むずかしい,難しい,むずかしい,difficult
-易,easy,えき・い,やさしい,易しい,やさしい,easy
-忙,busy,ぼう,いそがしい,忙しい,いそがしい,busy
-静,quiet,せい・じょう,しずか,静か,しずか,quiet
-正,correct/right,せい・しょう,ただしい・まさ,正しい,ただしい,correct
-同,same,どう,おなじ,同じ,おなじ,same
-違,different,い,ちがう,違う,ちがう,different
-始,begin,し,はじめる,始める,はじめる,to begin
-終,end,しゅう,おわる,終わる,おわる,to end
-開,open,かい,あける・ひらく,開く,あける,to open
-閉,close,へい,しめる・とじる,閉める,しめる,to close
-出,exit/go out,しゅつ・すい,でる・だす,出る,でる,to exit
-入,enter,にゅう,はいる・いれる,入る,はいる,to enter
-帰,return,き,かえる,帰る,かえる,to return
+character,meaning,onyomi,kunyomi,example
+悪, bad, アク・オ, わる（い）, 悪人::あくにん::bad guy||悪寒::おかん::shiver
+安, peaceful/easy/cheap, アン, やす（い）, 安心::あんしん：:relief||不安：:ふあん::anxiety||安易::あんい::superficial||安値::やすね::low price
+暗, dark, アン, くら（い）, 暗号::あんごう::code/cipher||暗算::あんざん::mental arithmetic
+医, doctor/healing, イ, -, 医者::いしゃ::doctor||医師::いし::doctor||外科医::げかい::surgeon||医務室::いむしつ::medical office
+委, leave it to/detailed, イ, -, 委員::いいん::committee member||委員会::いいんかい::committee
+意, thought/reason, イ, -, 意味::いみ::meaning||意見::いけん::opinion||注意::ちゅうい::caution
+
+

@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { kanjiAPI } from '../services/api'
 import './Learn.css'
 
 function Learn() {
+  const navigate = useNavigate()
   const [selectedClass, setSelectedClass] = useState(null)
   const [kanjiList, setKanjiList] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [currentKanji, setCurrentKanji] = useState(null)
   const [showAnswer, setShowAnswer] = useState(false)
+  const [viewMode, setViewMode] = useState('list') // 'list' or 'flashcard'
 
   const classes = [1, 2, 3, 4, 5, 6]
 
@@ -119,13 +122,107 @@ function Learn() {
 
   const currentIndex = kanjiList.findIndex(k => k.id === currentKanji.id) + 1
 
+  const handleKanjiClick = (kanji) => {
+    setCurrentKanji(kanji)
+    setViewMode('flashcard')
+    setShowAnswer(false)
+  }
+
+  const handleReviewClass = () => {
+    // Navigate to review with class filter
+    // For now, we'll review all kanji from this class
+    navigate(`/review?class=${selectedClass}`)
+  }
+
+  // List view
+  if (viewMode === 'list') {
+    return (
+      <div className="learn">
+        <div className="learn-header">
+          <button className="back-button" onClick={() => setSelectedClass(null)}>
+            ← Back to Classes
+          </button>
+          <div className="learn-header-content">
+            <h1>Class {selectedClass} Kanji</h1>
+            <div className="view-mode-toggle">
+              <button 
+                className={`toggle-btn active`}
+                onClick={() => setViewMode('list')}
+              >
+                List
+              </button>
+            <button 
+              className={`toggle-btn`}
+              onClick={() => {
+                if (kanjiList.length > 0 && !currentKanji) {
+                  setCurrentKanji(kanjiList[0])
+                }
+                setViewMode('flashcard')
+              }}
+            >
+              Flashcard
+            </button>
+            </div>
+          </div>
+          <div className="progress-indicator">
+            {kanjiList.length} kanji
+          </div>
+        </div>
+
+        <div className="kanji-list-grid">
+          {kanjiList.map((kanji) => (
+            <div 
+              key={kanji.id} 
+              className="kanji-card"
+              onClick={() => handleKanjiClick(kanji)}
+            >
+              <div className="kanji-card-character">{kanji.character}</div>
+              <div className="kanji-card-meaning">{kanji.meaning}</div>
+              {kanji.readings?.onyomi?.length > 0 && (
+                <div className="kanji-card-readings">
+                  <span className="reading-label">音:</span>
+                  {kanji.readings.onyomi.slice(0, 2).map((r, i) => (
+                    <span key={i} className="reading-item">{r}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="class-review-section">
+          <button className="review-class-button" onClick={handleReviewClass}>
+            Review Class {selectedClass}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Flashcard view
   return (
     <div className="learn">
       <div className="learn-header">
-        <button className="back-button" onClick={() => setSelectedClass(null)}>
-          ← Back to Classes
+        <button className="back-button" onClick={() => setViewMode('list')}>
+          ← Back to List
         </button>
-        <h1>Class {selectedClass} Kanji</h1>
+        <div className="learn-header-content">
+          <h1>Class {selectedClass} Kanji</h1>
+          <div className="view-mode-toggle">
+            <button 
+              className={`toggle-btn`}
+              onClick={() => setViewMode('list')}
+            >
+              List
+            </button>
+            <button 
+              className={`toggle-btn active`}
+              onClick={() => setViewMode('flashcard')}
+            >
+              Flashcard
+            </button>
+          </div>
+        </div>
         <div className="progress-indicator">
           {currentIndex} / {kanjiList.length}
         </div>

@@ -37,27 +37,32 @@ class Command(BaseCommand):
             Kanji.objects.all().delete()
             self.stdout.write(self.style.SUCCESS('Cleared all kanji'))
 
+        # Get the kanji_data directory path
+        # BASE_DIR points to backend/, so kanji_data is in backend/kanji_data/
+        if hasattr(settings, 'BASE_DIR'):
+            kanji_data_dir = os.path.join(settings.BASE_DIR, 'kanji_data')
+        else:
+            # Fallback: go up from command file to backend/, then to kanji_data
+            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+            kanji_data_dir = os.path.join(base_dir, 'kanji_data')
+        
         if options['all']:
             # Import all class files
-            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
-            kanji_data_dir = os.path.join(base_dir, 'kanji_data')
             for class_num in range(1, 7):
                 filename = f'kanji_class_{class_num}.csv'
                 filepath = os.path.join(kanji_data_dir, filename)
                 if os.path.exists(filepath):
                     self.import_csv(filepath, class_num)
                 else:
-                    self.stdout.write(self.style.WARNING(f'File not found: {filename}'))
+                    self.stdout.write(self.style.WARNING(f'File not found: {filepath}'))
         elif options['class']:
             class_num = options['class']
-            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
-            kanji_data_dir = os.path.join(base_dir, 'kanji_data')
             filename = f'kanji_class_{class_num}.csv'
             filepath = os.path.join(kanji_data_dir, filename)
             if os.path.exists(filepath):
                 self.import_csv(filepath, class_num)
             else:
-                self.stdout.write(self.style.ERROR(f'File not found: {filename}'))
+                self.stdout.write(self.style.ERROR(f'File not found: {filepath}'))
         elif options['file']:
             # Extract class number from filename
             filename = options['file']

@@ -19,6 +19,8 @@ class ReviewView(APIView):
         
         # Get mastery level filter if provided
         mastery_level = request.query_params.get('mastery_level', None)
+        # Get class level filter if provided
+        class_level = request.query_params.get('class', None)
         
         # Get kanji that are due for review (next_review <= now)
         # Or get kanji that haven't been reviewed yet
@@ -26,6 +28,16 @@ class ReviewView(APIView):
         
         # Base queryset
         reviews = KanjiReview.objects.all()
+        
+        # Filter by class level if provided
+        if class_level is not None:
+            try:
+                class_level = int(class_level)
+                reviews = reviews.filter(kanji__class_level=class_level)
+            except ValueError:
+                return Response({
+                    'error': 'Invalid class parameter. Must be a number between 1-6.'
+                }, status=status.HTTP_400_BAD_REQUEST)
         
         # Filter by mastery level if provided
         if mastery_level is not None:
@@ -53,7 +65,11 @@ class ReviewView(APIView):
             review = reviews.first()
         
         if not review:
-            level_msg = f' at mastery level {mastery_level}' if mastery_level is not None else ''
+            level_msg = ''
+            if mastery_level is not None:
+                level_msg = f' at mastery level {mastery_level}'
+            elif class_level is not None:
+                level_msg = f' in class {class_level}'
             return Response({
                 'error': f'No kanji available for review{level_msg}'
             }, status=status.HTTP_404_NOT_FOUND)

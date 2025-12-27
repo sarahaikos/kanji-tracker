@@ -409,6 +409,144 @@
   color: var(--text-muted);
 }
 
+/* List View Styles */
+.learn-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.view-mode-toggle {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 0.25rem;
+}
+
+.toggle-btn {
+  padding: 0.5rem 1.25rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.toggle-btn:hover:not(.active) {
+  background: var(--surface-light);
+  color: var(--text);
+}
+
+.class-review-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.review-class-button {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(30, 64, 175, 0.3);
+  letter-spacing: -0.01em;
+}
+
+.review-class-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(30, 64, 175, 0.4);
+}
+
+.kanji-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.kanji-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.kanji-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+  background: var(--surface-light);
+}
+
+.kanji-card-character {
+  font-size: 3.5rem;
+  font-weight: 400;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: serif;
+  line-height: 1;
+}
+
+.kanji-card-meaning {
+  font-size: 1rem;
+  color: var(--text);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.kanji-card-readings {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.reading-label {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.reading-item {
+  background: var(--surface);
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border);
+  font-size: 0.8125rem;
+}
+
 @media (max-width: 768px) {
   .class-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -447,6 +585,29 @@
   .nav-button.prev,
   .nav-button.next {
     margin: 0;
+  }
+
+  .learn-header-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .view-mode-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .kanji-list-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+
+  .kanji-card {
+    padding: 1.25rem;
+  }
+
+  .kanji-card-character {
+    font-size: 2.5rem;
   }
 }
 

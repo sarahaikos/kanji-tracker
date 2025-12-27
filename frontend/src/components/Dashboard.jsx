@@ -40,11 +40,19 @@ function Dashboard() {
   const loadStats = async () => {
     try {
       setLoading(true)
+      setError(null)
       const data = await kanjiAPI.getStats()
       setStats(data)
     } catch (err) {
-      setError('Failed to load statistics')
-      console.error(err)
+      const errorMessage = err.response?.data?.error || err.message || 'Failed to load statistics'
+      setError(errorMessage)
+      console.error('Stats loading error:', err)
+      console.error('Error details:', {
+        message: err.message,
+        status: err.response?.status,
+        data: err.response?.data,
+        url: err.config?.url
+      })
     } finally {
       setLoading(false)
     }
@@ -70,7 +78,7 @@ function Dashboard() {
   const masteryPercentage = stats.mastery_progress > 0 
     ? Math.round(stats.mastery_progress)
     : (stats.total_kanji > 0 
-      ? Math.round((stats.mastered / stats.total_kanji) * 100) 
+    ? Math.round((stats.mastered / stats.total_kanji) * 100) 
       : 0)
 
   return (
